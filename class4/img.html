@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		function chkname(){
+			var uname=document.getElementById("uname").value;
+			im = document.createElement("img");
+			im.src ="http://localhost/WebTech2/class4/img.php?uname="+uname;
+			im.onload=sucess;
+			im.onerror=failure;
+			// document.body.appendChild(im);
+		}
+		function sucess(){
+			var chk=document.getElementById("chk");
+			if(im.width == 2){
+				chk.innerHTML="user name avaliable";
+			}
+			else if(im.width == 1){
+				chk.innerHTML="choose another username";
+			}
+			console.log(im.width);
+
+		}
+		function failure(){
+			chk.innerHTML="Somthing is not rigth";
+			console.log("fail");
+		}
+
+	</script>
+
+</head>
+<body>
+	<form>
+		<input type="text" name="uname" id="uname" onblur="chkname()">
+		<div id="chk"></div>
+		<input type="password" name="pwd" id="pwd">
+	</form>
+</body>
+</html>

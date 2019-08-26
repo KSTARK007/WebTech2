@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX</title>
+
+	<script type="text/javascript">
+		function getdata() {
+			console.log("working");
+			var srn = document.getElementById("srn").value;
+			var hf = document.getElementById("hf");
+			hf.src="http://localhost/WT2/class3/get.php?srn="+srn;
+
+		}
+		function showDetails(str){
+			var a = str.split(";");
+			console.log(a[0]);
+			console.log(a[1]);
+			document.getElementById("srn").value = a[0];
+			document.getElementById("name").value = a[1];
+			document.getElementById("sgpa").value = a[2];
+
+
+		}
+		
+	</script>
+
+</head>
+<body>
+<form action="post.php" method="POST" target="hf">
+	<label>SRN: <input type="text" name="srn" placeholder="SRN" id="srn" onblur="getdata()"><br><br></label>
+	<label>Name: <input type="text " name="name " placeholder="NAME" id="name"><br><br></label>
+	<label>SGPA: <input type="text" name="sgpa" placeholder="SGPA" id="sgpa"><br><br></label>
+	<input type="submit" name="SAVE">
+	<iframe src="page1.html" id="hf" name="hf" style="display: ;"></iframe>
+</form>
+<!-- script type="text/javascript">
+	var i = 1
+	var k = 0
+		while(k <=10){
+			
+			if(i == 1){
+				i = 2;
+			}
+			else {
+				i = 1
+			}
+			var j = toString(i);
+			document.getElementById("srn").focus();
+			document.getElementById("srn").value = "SRN"+i;
+			document.getElementById("srn").blur();
+			k = k+1;
+		}
+</script> -->
+</body>
+</html>

@@ -1,0 +1,47 @@
+<HTML>
+    <script>
+        function Rectangle (l,b) {
+            this.l = l;
+            this.b = b;
+        }
+        Rectangle.prototype.calArea=function(){
+            return this.l*this.b;
+        }
+        Rectangle.prototype.toString=function(){
+            return "length= "+this.l + " Breadth = "+ this.b; 
+        }
+        var rect = new Rectangle(10,5);
+        console.log(rect.calArea());
+        console.log(rect.toString());
+        console.log(rect instanceof Object);
+        console.log(rect instanceof Rectangle);
+        
+        function Square(size){
+            this.l = size;
+            this.b = size;
+        }
+
+        // function Square(size){
+        //    Rectangle.call(this,size,size); Constructor Stealing 
+        // }
+
+        
+        Square.prototype=new Rectangle();
+        console.log(Square.prototype.constructor);
+        Square.prototype.constructor=Square;
+        console.log(Square.prototype.constructor);
+        Square.prototype.toString=function(){
+            return "Dimension is "+this.l
+        }
+        var sq=new Square(5);
+        console.log(sq.calArea());
+        console.log(sq.toString());
+        console.log("Object ");
+        console.log(sq instanceof Object);
+        console.log("Rectangle ");
+        console.log(sq instanceof Rectangle);
+        console.log("Square ");
+        console.log(sq instanceof Square);
+
+    </script>
+</HTML>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		function chkname(){
+			var uname=document.getElementById("uname").value;
+			var im = document.createElement("img");
+			im.src ="http://localhost/WT2/class3/img.php?uname="+uname;
+			im.load=sucess;
+			im.error=failure;
+		}
+	</script>
+</head>
+<body>
+	<form>
+		<input type="text" name="uname" id="uname" onblur="chkname()">
+		<input type="password" name="pwd" id="pwd">
+	</form>
+</body>
+</html>

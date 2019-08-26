@@ -1,0 +1,2 @@
+call (obj,parameters1,parameter2,...)
+apply(obj,[array of parameters]) - it maps it automaticaly 

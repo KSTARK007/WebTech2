@@ -1,0 +1,27 @@
+<HTML>
+    <script>
+        function Person (fn,ln,age) {
+            this.fn = fn;
+            this.ln = ln;
+            this.age = age;
+        }
+        Person.prototype.sayName=function(){
+            return "Hi"+this.fn;
+        }
+        var person1 = new Person("abc","def",34);
+        function sayGM(ampm){
+            return "Good morning "+this.fn+" this is"+ampm;
+        }
+        // function sayGM(ampm,time){
+        //     return "Good morning"+this.fn+" this is"+time+ampm;
+        // }
+        function sayGM(){
+            return "Good morning "+this.fn+" this is "+arguments[1]+" " + arguments[0];
+        }
+
+        console.log(sayGM());
+        console.log(sayGM.call(person1));
+        console.log(sayGM.call(person1,"am"));
+        console.log(sayGM.apply(person1,["am",7]));
+    </script>
+</HTML>

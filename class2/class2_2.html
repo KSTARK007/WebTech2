@@ -1,0 +1,19 @@
+<HTML>
+    <script>
+        function Rectangle (l,b) {
+            this.l = l;
+            this.b = b;
+        }
+        Rectangle.prototype.calArea=function(){
+            return this.l*this.b;
+        }
+        Rectangle.prototype.toString=function(){
+            return "length= "+this.l + " Breadth = "+ this.b; 
+        }
+        var rect = new Rectangle(10,5);
+        console.log(rect.calArea());
+        console.log(rect.toString());
+        console.log(rect instanceof Object);
+        console.log(rect instanceof Rectangle);
+    </script>
+</HTML>

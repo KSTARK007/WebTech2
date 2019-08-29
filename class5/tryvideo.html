@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		obj={
+			xhr:new XMLHttpRequest(),
+			getVideo:function(i){
+				this.xhr.onreadystatechange=this.showVideo;
+				this.xhr.open("GET","http://localhost/WebTech2/class5/try.php?a="+i,true);
+				this.xhr.responseType="blob";
+				this.xhr.send();
+			},
+			showVideo:function(){
+				if(this.readyState == 4 && this.status == 200){
+					//create video ele and receive the response
+					console.log(this.response);
+					var vid=document.createElement("video");
+					vid.controls=true;
+					vid.src = window.URL.createObjectURL(this.response);
+					document.body.appendChild(vid)
+				}
+				 // console.log(this.response)
+			}
+
+		}	
+	</script>
+
+
+</head>
+<body>
+	<button id="btn" onclick="obj.getVideo()">GET Video</button>
+</body>
+</html>

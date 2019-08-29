@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		var obj={
+			xhr:new XMLHttpRequest(),
+			getDetails:function(){
+				console.log("THIS IS THIS");
+				mname = document.getElementById('mname').value;
+				console.log(mname)
+				this.xhr.onreadystatechange=this.showDetails;
+				this.xhr.open("GET","http://localhost/WebTech2/class5/getActor.php?mname="+mname,true);
+				this.xhr.send();
+			},
+			showDetails:function(){
+				if(this.readyState==4 && this.status==200){
+					var ret=this.responseText;
+					var retJSON=JSON.parse(ret);
+					document.getElementById("mlead").value=retJSON.lead;
+					document.getElementById("myear").value=retJSON.year;
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+
+
+<label>Name: <input type="text" id="mname" onblur="obj.getDetails()"></label><br>	
+<label>Lead: <input type="text" id="mlead" disabled></label><br>
+<label>Year: <input type="text" id="myear" disabled></label><br>
+
+</body>
+</html>

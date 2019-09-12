@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		obj={
+			xhr:new XMLHttpRequest(),
+			getCaption:function(){
+				this.xhr.onreadystatechange=this.showCaption;
+				// this.xhr.open("GET","http://localhost/WebTech2/class6/main.php",true);
+				this.xhr.open("GET","http://localhost/WebTech2/class6/cors.php",true);
+				// this.xhr.open("PUT","http://localhost/WebTech2/class6/cors.php",true);
+				this.xhr.send();
+			},
+			showCaption:function(){
+				if(this.readyState == 4 && this.status == 200){
+					console.log(this.response);
+					document.getElementById('caption').innerHTML=this.responseText;
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<img src="pic.jpg">
+	<div id="caption"></div>
+	<button onclick="obj.getCaption()">click me</button>
+
+
+</body>
+</html>

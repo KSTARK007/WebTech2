@@ -1,0 +1,8 @@
+					History			get/post		CORS		error		payload
+Hidden frames			y				y			y + header	 N			 text/script
+
+Images					N				get			 Y 			 Y 			Image, text-cookie
+
+XHR					Y(implement)		y 			y + header	 Y 	 		text,XML,JSON,Blob,doc
+
+CSS/JSON 				N				GET 		 Y 			  Y 		script, text

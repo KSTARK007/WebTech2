@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		 #scoreboard{
+			height:100px;
+			width:500px;
+			border:3px solid orange;
+			padding:50px;
+		 }
+		 .score{
+			height: 200px;
+			width: 200px;
+			border:2px solid grey;
+			margin:10px;
+			padding:20px;
+			font-size:24pt;
+			font-weight:bold;
+			font-family:verdana;
+			display:inline;	
+		 }
+		</style>
+		<script>
+			var xhr= new XMLHttpRequest();
+			var time=1000;
+			function fetch() {
+				xhr.onreadystatechange=showScores;
+				xhr.timeout=time;
+				xhr.ontimeout=backOff;
+				xhr.open("GET","http://localhost/WebTech2/class9/pr.php",true);
+				xhr.send();
+			}
+
+			function showScores(){
+    			if(xhr.readyState==4 && xhr.status==200){
+				    time=1000;
+				    var res=xhr.responseText;
+				    console.log(res);
+				    var resArr=res.split(";");
+				    console.log(resArr);
+				    console.log(xhr.readyState);
+				    console.log(resArr[0]);
+				    console.log(resArr[1]);
+				    console.log(resArr[2]);
+				    document.getElementById('score1').innerHTML=resArr[0];
+				    document.getElementById('score2').innerHTML=resArr[1];
+				    document.getElementById('score3').innerHTML=resArr[2];
+					xhr.abort();
+					setTimeout(fetch,2000);
+				}
+
+  			}
+  			function backOff(){
+  					console.log("fail");
+  					time=time*2;
+  					fetch();
+  			}
+
+		</script>
+	</head>
+	<body onload="fetch()">
+	<h1>Periodic Refresh</h1>
+			<div id="upd">Udating....</div>
+		<div id="scoreboard">
+			<div id="score1" class="score">100</div>
+			<div id="score2" class="score">200</div>
+			<div id="score3" class="score">300</div>
+		</div>
+	
+	</body>
+
+
+</html>

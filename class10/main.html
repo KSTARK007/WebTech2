@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		#container{
+			border: solid 1px black;
+			display: none;
+		}
+		.fooditem{
+			background-color: grey;
+			color: black;
+		}
+		.fooditem:hover{
+			background-color: white;
+		}
+	</style>
+
+
+	<script type="text/javascript">
+		function Suggest() {
+			object=this;
+			this.search=null;
+			this.timer = null;
+			this.url = null;
+			this.xhr=new XMLHttpRequest();
+			this.container = null;
+
+
+
+
+			this.getTerm=function(){
+				// console.log(this)
+				if(this.timer){
+					clearTimeout(this.timer);
+				}
+				this.timer=setTimeout(this.sendTerm,1000);
+
+			}
+
+			this.sendTerm=function(){
+				// console.log(this)
+				// console.log(object)
+				object.search=document.getElementById("item");
+				var term=object.search.value;
+				console.log("sending..."+term);
+				object.url="http://localhost/WebTech2/class10/main.php?term="+term;
+				object.xhr.onreadystatechange=object.showResult;
+				object.xhr.open("GET",object.url,true)
+				object.xhr.send();
+			}
+			this.showResult=function(){
+				if(this.readyState==4 && this.status==200){
+					var res=this.responseText;
+					var resJSON=JSON.parse(res);
+					if(resJSON.length==0){
+						object.search.value="No Results Found";
+						object.search.style.backgroundColor="red";
+						object.search.style.fontStyle="italic";
+						object.search.onblur=function(){
+
+						object.search.value="";
+						object.search.style.backgroundColor="white";
+						object.search.style.fontStyle="normal";
+						}
+
+					}
+					else{
+						// console.log(resJSON);
+						object.populateFood(resJSON);
+					}
+				}
+
+				// console.log(this);
+
+
+			}
+
+
+			this.populateFood=function(resO){
+				object.container=document.getElementById('container');
+				while(object.container.firstChild){
+					object.container.removeChild(object.container.firstChild);
+				}
+				for(f in resO){
+				var itemdiv = document.createElement("div");
+				itemdiv.className="fooditem";
+				itemdiv.innerHTML=resO[f];
+				// itemdiv.style.backgroundColor="white";
+				itemdiv.style.margin="5px";
+				itemdiv.style.padding="5px";
+				itemdiv.onclick = object.setFood;
+				object.container.appendChild(itemdiv);
+				
+				}
+				object.container.style.display="block";
+				// object.container.style.backgroundColor="grey";
+				object.container.style.border="solid";
+
+			}
+
+			this.setFood=function(e){
+				var result=e.target.innerHTML;
+				object.search.value=result;
+				object.container.innerHTML="";
+				object.container.style.display="none";
+			}
+
+
+
+
+
+
+
+
+
+		}
+		var obj = new Suggest();
+	</script>
+</head>
+<body>
+
+	<table border="0">
+		<tr>
+			<td>Name </td>
+			<td><input type="text" name="uname" id="uname"></td>
+		</tr>
+		<tr>
+			<td>Item </td>
+			<td><input type="text" name="Item" id="item" onkeypress="obj.getTerm()" placeholder="Search.."></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><div id="container"></div></td>
+		</tr>
+	</table>
+</body>
+</html>

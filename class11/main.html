@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="rss.css">
+	<script type="text/javascript">
+		
+		function NewsFeed(){
+
+			othis = this;
+			this.xhr=new XMLHttpRequest();
+			this.div = document.getElementById('inner');		
+			this.div.style.left = window.innerWidth - 5 + "px";
+			this.scroll();
+			this.getNews();
+
+		}
+
+		NewsFeed.prototype.scroll=function(){
+			// console.log(othis.div.offsetLeft+othis.div.offsetWidth)
+			if(othis.div.offsetLeft+othis.div.offsetWidth<2){
+				othis.div.style.left=window.innerWidth-5+"px";
+			}
+			else{
+				othis.div.style.left=othis.div.offsetLeft-2+"px";
+			}
+			setTimeout(othis.scroll,15);
+
+		}
+
+		NewsFeed.prototype.getNews = function() {
+				othis.xhr.onreadystatechange=othis.showNews;
+				othis.xhr.open("GET","http://localhost/WebTech2/class11/main.php",true);
+				othis.xhr.send();
+
+
+		}
+
+		NewsFeed.prototype.showNews=function(){
+				othis.div.innerHTML = "";
+			if(this.readyState==4 && this.status==200){
+				// console.log(this.responseText);
+				console.log(this.responseXML);
+				var root=this.responseXML.documentElement;
+				console.log(root);
+				var items = root.getElementsByTagName("item");
+				for (var i = 0; i < items.length; i++) {
+					title = items[i].getElementsByTagName("title")[0].firstChild.nodeValue;
+					link = items[i].getElementsByTagName("link")[0].firstChild.nodeValue;
+					
+					var newsitem = new newsFeedItem(title,link);
+					othis.div.appendChild(newsitem.nf);
+					othis
+					// othis.div.appendChild(document.createElement("br"));
+					// title = items[i].getElementsByTagName("title")[0].lastChild.nodeValue;
+					// title = items[i].getElementsByTagName("title")[0].children[0].nodeValue;
+					// console.log(items[i].getElementsByTagName("title"));
+					// console.log(items[i].getElementsByTagName("title")[0]);
+					// console.log(title);
+
+				}
+
+			}
+		}
+
+		function init() {
+			new NewsFeed();
+		}
+
+
+		function newsFeedItem(title,link){
+
+			this.nf = document.createElement("a");
+			this.nf.href=link;
+			this.nf.innerHTML=title;
+			// inner = document.getElementById("inner");
+			// inner.appendChild(document.createElement("br"));
+			// inner.appendChild(document.createElement("br"));
+			// inner.appendChild(nf);
+			// inner.appendChild(document.createElement("br"));
+
+		}
+
+
+
+
+
+	</script>
+</head>
+<body onload="init()">
+	<div id="outer">
+		<div id="inner"> 
+			<marquee>PLEASE STANDBY FOR THIS NEWS ....</marquee>
+		</div>
+	</div>
+</body>
+</html>

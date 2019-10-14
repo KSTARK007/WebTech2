@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		timer=0;
+		var obj={
+			monitor:function () {
+				var hf=document.getElementById("hf");
+				hf.src="http://localhost/WebTech2/class13/hf.php";
+
+			},
+			showChange:function(res){
+				var newdiv=document.createElement("div");
+				newdiv.innerHTML=res;
+				document.body.appendChild(newdiv);
+				obj.heartbeat();
+			},
+			heartbeat:function(){
+				if(timer){
+					clearTimeout(timer);
+				}
+				console.log("heartbeat called");
+				var cnt=document.getElementById('cnt').innerHTML;
+				cnt = parseInt(cnt)+1;
+				document.getElementById('cnt').innerHTML=cnt;
+				console.log("counter ");
+				console.log(cnt);
+				timer=setTimeout(obj.monitor,10000);
+			}
+		}
+	</script>
+</head>
+<body>
+	<button onclick="obj.monitor()"> click to monitor</button>
+	<h1 id="cnt" style="display: none;">0</h1>
+	<iframe id="hf"></iframe>
+	<h1 id="k"></h1>
+</body>
+</html>

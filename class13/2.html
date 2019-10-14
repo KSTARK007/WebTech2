@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script type="text/javascript">
+		var obj={
+			monitor:function(){
+				es=new EventSource("see.php");
+				es.addEventListener("message",obj.display,false);
+
+			},
+			display:function(e){
+				console.log(e.data);
+				// console.log(e.retry);
+
+			}
+
+
+
+		}
+	</script>
+</head>
+<body>
+	<button onclick="obj.monitor()">click me</button>
+</body>
+</html>
